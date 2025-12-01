@@ -11,8 +11,15 @@ export default defineNuxtConfig({
     '@nuxt/fonts',
     'nuxt-studio'
   ],
-
-  devtools: { enabled: true },
+  nitro: {
+    preset: 'vercel',
+    rollupConfig: {
+      external: []
+    },
+    alias: {
+      'better-sqlite3': '@libsql/client'
+    }
+  },
 
   css: ['./app/assets/css/tailwind.css'],
 
@@ -34,7 +41,13 @@ export default defineNuxtConfig({
   },
 
   studio: {
-    dev: true,
+    // Git repository configuration (owner and repo are required)
+    repository: {
+      provider: 'github', // 'github' or 'gitlab'
+      owner: 'alexstapfofficial', // your GitHub/GitLab username or organization
+      repo: 'lummerland', // your repository name
+      branch: 'main', // the branch to commit to (default: 'main')
+    }
   },
 
   compatibilityDate: '2024-11-29'
