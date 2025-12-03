@@ -136,19 +136,22 @@ const componentName = computed(() => {
     .join('')
 })
 
+// Komponenten-Namen Map (müssen PascalCase sein!)
+const componentMap: Record<string, string> = {
+  'hero': 'Hero',
+  'advantages': 'Advantages',
+  'development': 'Development',
+  'gallery': 'Gallery',
+  'team': 'Team',
+  'schedule': 'Schedule',
+  'holidays': 'Holidays',
+  'pricing': 'Pricing',
+  'contact': 'Contact',
+  'cta': 'Cta'
+}
+
 // Liste der verfügbaren Komponenten
-const availableComponents = [
-  'Hero',
-  'Advantages',
-  'Development',
-  'Gallery',
-  'Team',
-  'Schedule',
-  'Holidays',
-  'Pricing',
-  'Contact',
-  'Cta'
-]
+const availableComponents = Object.values(componentMap)
 
 // Lade den Content aus der Markdown-Datei
 const { data: content, pending } = await useAsyncData(
@@ -159,19 +162,21 @@ const { data: content, pending } = await useAsyncData(
   }
 )
 
-// Dynamisch die Komponente laden
+// Dynamisch die Komponente als String zurückgeben (für :is directive)
 const component = computed(() => {
-  try {
-    if (!componentName.value || !availableComponents.includes(componentName.value)) {
-      return null
-    }
+  if (!slug.value) return null
 
-    // Versuche die Komponente zu laden
-    return resolveComponent(componentName.value)
-  } catch (error) {
-    console.error(`Failed to load component: ${componentName.value}`, error)
+  const slugLower = slug.value.toLowerCase()
+  const pascalCaseName = componentMap[slugLower]
+
+  if (!pascalCaseName || !availableComponents.includes(pascalCaseName)) {
+    console.error('Component not found:', slug.value, pascalCaseName)
     return null
   }
+
+  // Gib den PascalCase Component-Namen als String zurück
+  // Vue wird ihn automatisch auflösen
+  return pascalCaseName
 })
 
 // SEO Meta Tags
