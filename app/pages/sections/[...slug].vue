@@ -153,7 +153,7 @@ const availableComponents = [
 // Lade den Content aus der Markdown-Datei
 const { data: content, pending } = await useAsyncData(
   `section-${slug.value}`,
-  () => queryCollection('sections').path(`/sections/${slug.value}`).findOne(),
+  () => queryCollection('sections').path(`/sections/${slug.value}`).first(),
   {
     watch: [slug]
   }
