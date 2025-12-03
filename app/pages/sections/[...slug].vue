@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
     <!-- Studio Preview Header -->
-    <div class="bg-primary-600 text-white py-3 px-4 text-sm sticky top-0 z-50 shadow-lg">
+    <div class="bg-cream-can text-white py-3 px-4 text-sm sticky top-0 z-50 shadow-lg">
       <UContainer>
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-3">
@@ -13,14 +13,13 @@
             </code>
           </div>
           <div class="flex items-center gap-2">
-            <UBadge v-if="content" color="green" variant="subtle">
+            <UBadge v-if="content" variant="subtle">
               <UIcon name="heroicons:check-circle" class="w-3 h-3" />
               Loaded
             </UBadge>
             <UButton
               to="/"
               size="xs"
-              color="white"
               variant="ghost"
               icon="heroicons:arrow-left"
             >
@@ -112,7 +111,6 @@
               :to="`https://github.com/alexstapfofficial/lummerland/blob/main/content/sections/${slug}.md`"
               target="_blank"
               icon="heroicons:document-text"
-              color="gray"
               variant="ghost"
             >
               Edit on GitHub
@@ -155,7 +153,7 @@ const availableComponents = [
 // Lade den Content aus der Markdown-Datei
 const { data: content, pending } = await useAsyncData(
   `section-${slug.value}`,
-  () => queryContent(`/sections/${slug.value}`).findOne(),
+  () => queryCollection('sections').path(`/sections/${slug.value}`).findOne(),
   {
     watch: [slug]
   }
