@@ -31,8 +31,17 @@
     </div>
 
     <!-- Component Preview -->
-    <div v-if="component && content">
-      <component :is="component" />
+    <div v-if="content && componentName">
+      <Hero v-if="componentName === 'Hero'" />
+      <Advantages v-else-if="componentName === 'Advantages'" />
+      <Development v-else-if="componentName === 'Development'" />
+      <Gallery v-else-if="componentName === 'Gallery'" />
+      <Team v-else-if="componentName === 'Team'" />
+      <Schedule v-else-if="componentName === 'Schedule'" />
+      <Holidays v-else-if="componentName === 'Holidays'" />
+      <Pricing v-else-if="componentName === 'Pricing'" />
+      <Contact v-else-if="componentName === 'Contact'" />
+      <Cta v-else-if="componentName === 'Cta'" />
     </div>
 
     <!-- Loading State -->
@@ -136,22 +145,19 @@ const componentName = computed(() => {
     .join('')
 })
 
-// Komponenten-Namen Map (müssen PascalCase sein!)
-const componentMap: Record<string, string> = {
-  'hero': 'Hero',
-  'advantages': 'Advantages',
-  'development': 'Development',
-  'gallery': 'Gallery',
-  'team': 'Team',
-  'schedule': 'Schedule',
-  'holidays': 'Holidays',
-  'pricing': 'Pricing',
-  'contact': 'Contact',
-  'cta': 'Cta'
-}
-
-// Liste der verfügbaren Komponenten
-const availableComponents = Object.values(componentMap)
+// Liste der verfügbaren Komponenten für die Fehlerseite
+const availableComponents = [
+  'Hero',
+  'Advantages',
+  'Development',
+  'Gallery',
+  'Team',
+  'Schedule',
+  'Holidays',
+  'Pricing',
+  'Contact',
+  'Cta'
+]
 
 // Lade den Content aus der Markdown-Datei
 const { data: content, pending } = await useAsyncData(
@@ -161,23 +167,6 @@ const { data: content, pending } = await useAsyncData(
     watch: [slug]
   }
 )
-
-// Dynamisch die Komponente als String zurückgeben (für :is directive)
-const component = computed(() => {
-  if (!slug.value) return null
-
-  const slugLower = slug.value.toLowerCase()
-  const pascalCaseName = componentMap[slugLower]
-
-  if (!pascalCaseName || !availableComponents.includes(pascalCaseName)) {
-    console.error('Component not found:', slug.value, pascalCaseName)
-    return null
-  }
-
-  // Gib den PascalCase Component-Namen als String zurück
-  // Vue wird ihn automatisch auflösen
-  return pascalCaseName
-})
 
 // SEO Meta Tags
 useSeoMeta({
