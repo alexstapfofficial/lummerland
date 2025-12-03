@@ -1,4 +1,6 @@
 ---
+title: Schließzeiten
+description: Urlaubszeiten und Brückentage im Lummerland
 tagline: Planung
 heading: Urlaubszeiten
 bridgeDay: 'Brückentag: 30.05.2025'
