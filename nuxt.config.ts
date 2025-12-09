@@ -1,6 +1,11 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import tailwindcss from "@tailwindcss/vite";
 
+//TODO: pages/sections/ nur aufrubar wenn studio auth vorhanden ist.
+
+
+
+
 export default defineNuxtConfig({
   // SSR aktiviert (Standard in Nuxt 3)
   ssr: true,
@@ -30,6 +35,10 @@ export default defineNuxtConfig({
   content: {
     // File-based content für SSR
     documentDriven: false
+  },
+
+  ui: {
+    colorMode: false
   },
 
   fonts: {

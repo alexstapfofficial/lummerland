@@ -132,6 +132,11 @@
 </template>
 
 <script setup lang="ts">
+// Studio Authentication Middleware
+definePageMeta({
+  middleware: 'studio-auth'
+})
+
 const route = useRoute()
 const slug = computed(() => route.params.slug?.[0] || '')
 
@@ -176,17 +181,11 @@ useSeoMeta({
 })
 
 // Refresh content in Studio
-if (process.client) {
-  const studioRefresh = () => {
-    window.addEventListener('message', (event) => {
-      if (event.data.type === 'studio:refresh') {
-        refreshNuxtData(`section-${slug.value}`)
-      }
-    })
-  }
-
-  onMounted(() => {
-    studioRefresh()
+onMounted(() => {
+  window.addEventListener('message', (event) => {
+    if (event.data.type === 'studio:refresh') {
+      refreshNuxtData(`section-${slug.value}`)
+    }
   })
-}
+})
 </script>
