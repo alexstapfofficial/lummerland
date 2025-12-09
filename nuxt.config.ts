@@ -1,8 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import tailwindcss from "@tailwindcss/vite";
 
-//TODO: pages/sections/ nur aufrubar wenn studio auth vorhanden ist.
-
 
 
 
